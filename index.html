@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTacToe Game Online</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="grid-frame">
+            <div id="cell1" class="cell glass-effect" onclick="changeBackground(this.id, 1)"></div>
+            <div id="cell2" class="cell glass-effect" onclick="changeBackground(this.id ,2)"></div>
+            <div id="cell3" class="cell glass-effect" onclick="changeBackground(this.id, 3)"></div>
+            <div id="cell4" class="cell glass-effect" onclick="changeBackground(this.id, 4)"></div>
+            <div id="cell5" class="cell glass-effect" onclick="changeBackground(this.id, 5)"></div>
+            <div id="cell6" class="cell glass-effect" onclick="changeBackground(this.id, 6)"></div>
+            <div id="cell7" class="cell glass-effect" onclick="changeBackground(this.id, 7)"></div>
+            <div id="cell8" class="cell glass-effect" onclick="changeBackground(this.id, 8)"></div>
+            <div id="cell9" class="cell glass-effect" onclick="changeBackground(this.id, 9)"></div>
+        </div>
+    </div>
+
+    <div class="winner-box glass-effect">
+        <p>This match has been ended!</p>
+        <img src="https://img.icons8.com/ios-glyphs/90/000000/multiply.png" alt="Icon">
+        <h2> </h2>
+        <p>is the winner</p>
+        <a href="#" id="gotIt">Got it</a>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

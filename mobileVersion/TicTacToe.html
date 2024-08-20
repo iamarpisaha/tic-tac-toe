@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTacToe Game Online</title>
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <!-- internal style starts here -->
+    <style>
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+:root{
+    --height:50rem;
+    --width: 60rem;
+}
+html{
+    font-size: 62.5%;
+}
+.container{
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(to left top, crimson 20%, yellow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ----------------------------------------------game's inside frame  */
+.container .grid-frame{
+    height: var(--height);
+    width: var(--width);
+    /* background-color: crimson; */
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1.5rem;
+    position: relative;
+}
+.cell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* ------------------------------------ winner alert box style  
+-------------------------------------------------*/
+.winner-box{
+    width: calc(var(--width) - 15rem);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 10;
+    padding: 2.5rem 0;
+    text-align: center;
+    display: none;
+}
+.winner-box p{
+    font-size: 1.5rem;
+    color: rgb(20, 20, 20);
+    margin-bottom: 1rem;
+}
+.winner-box img{
+    height: 5rem;
+    margin: 1rem 0;
+}
+.winner-box h2{
+    font-size: 2.4rem;
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+}
+.winner-box h3{
+    font-size: 1.8rem;
+    font-weight: normal;
+}
+.winner-box a{
+    text-decoration: none;
+    padding: 0.5rem 2.5rem;
+    background: linear-gradient(to left top, crimson 48%, yellow);
+    border-radius: 1.5rem;
+    color: #fff;
+    font-size: 1.5rem;
+    display: inline-block;
+    margin-top: 1rem;
+}
+
+
+
+/* ----------------------------------- common classes
+------------------------------------------ */
+.glass-effect{
+    background: linear-gradient(to left top,rgba(255,255,255,0.3), rgba(255,255,255,0.6));
+    border-top: 0.1rem solid #fff;
+    border-left: 0.1rem solid #fff;
+    border-radius: 1.5rem;
+    backdrop-filter: blur(2rem);
+    box-shadow: 0.2rem 0.3rem 1rem 0 rgba(0,0,0,0.3);
+}
+
+.cross{
+    background: url("https://img.icons8.com/ios-glyphs/90/000000/multiply.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 55%;
+}
+.right{
+    background: url("https://img.icons8.com/ios-filled/100/000000/circled.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+}
+
+
+
+@media (max-width: 700px){
+    :root{
+        --height:48rem;
+        --width: 50rem;
+    }
+}
+@media (max-width: 590px){
+    :root{
+        --height:40rem;
+        --width: 42rem;
+    }
+    .winner-box{
+        width: calc(var(--width) - 8rem);
+    }
+}
+@media (max-width: 470px){
+    :root{
+        --height:33rem;
+        --width: 35rem;
+    }
+    .winner-box{
+        width: calc(var(--width) - 5rem);
+    }
+    .winner-box img{
+        height: 4rem;
+        margin: 1rem 0 0 0;
+    }
+    .winner-box a{
+        margin-top: 0;
+    }
+}
+@media (max-width: 400px){
+    :root{
+        --height:28rem;
+        --width: 30rem;
+    }
+    .winner-box img{
+        height: 3.5rem;
+        margin: 0;
+    }
+    
+    
+}
+@media (max-width: 345px){
+    :root{
+        --height:24rem;
+        --width: 26rem;
+    }
+    .winner-box{
+        width: calc(var(--width) - 3rem);
+    }
+    .winner-box img{
+        height: 3rem;
+    }
+}
+
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="grid-frame">
+            <div id="cell1" class="cell glass-effect" onclick="changeBackground(this.id, 1)"></div>
+            <div id="cell2" class="cell glass-effect" onclick="changeBackground(this.id ,2)"></div>
+            <div id="cell3" class="cell glass-effect" onclick="changeBackground(this.id, 3)"></div>
+            <div id="cell4" class="cell glass-effect" onclick="changeBackground(this.id, 4)"></div>
+            <div id="cell5" class="cell glass-effect" onclick="changeBackground(this.id, 5)"></div>
+            <div id="cell6" class="cell glass-effect" onclick="changeBackground(this.id, 6)"></div>
+            <div id="cell7" class="cell glass-effect" onclick="changeBackground(this.id, 7)"></div>
+            <div id="cell8" class="cell glass-effect" onclick="changeBackground(this.id, 8)"></div>
+            <div id="cell9" class="cell glass-effect" onclick="changeBackground(this.id, 9)"></div>
+        </div>
+    </div>
+
+    <div class="winner-box glass-effect">
+        <p>This match has been ended!</p>
+        <img src="https://img.icons8.com/ios-glyphs/90/000000/multiply.png" alt="Icon">
+        <h2> </h2>
+        <p>is the winner</p>
+        <a href="#" id="gotIt">Got it</a>
+    </div>
+    <!-- <script src="js/main.js"></script> -->
+
+    <!-- internal JS starts here -->
+    <script>
+        const winnerBox = document.querySelector(".winner-box");
+const gotIt = document.getElementById("gotIt");
+
+let count = 1;
+let arr = [1, 1, 1, 1, 1, 1, 1, 1, 1];
+
+// -----------------------------------change each button background when clicked
+function changeBackground(id, index) {
+    if (arr[index - 1] === 1) {
+        if (count === 1) {
+            document.getElementById(id).classList.add("cross");
+            count++;
+            arr[index - 1] = 0;
+        }
+        else {
+            document.getElementById(id).classList.add("right");
+            count--;
+            arr[index - 1] = 2;
+        }
+    }
+    winnerCheck();
+
+}
+
+// -------------------------------------checks the winner 
+function winnerCheck() {
+
+    // horizontal lines check 
+    if (arr[0] === arr[1] && arr[1] === arr[2] && arr[0] != 1) {
+        if (arr[0] === 0)
+            player1Win();
+        else
+            player2Win();
+    }
+    else if (arr[3] === arr[4] && arr[4] === arr[5] && arr[3] != 1) {
+        if (arr[3] === 0)
+            player1Win();
+        else
+            player2Win();
+        console.log(arr);
+
+    }
+    else if (arr[6] === arr[7] && arr[7] === arr[8] && arr[6] != 1) {
+        if(arr[6]===0)
+            player1Win();
+        else
+            player2Win(); 
+
+    }
+
+    // // vertical lines check 
+    else if (arr[0] === arr[3] && arr[3] === arr[6] && arr[0] != 1) {
+        if(arr[0]===0)
+            player1Win();
+        else
+            player2Win(); 
+
+    }
+    else if (arr[1] === arr[4] && arr[4] === arr[7] && arr[1] != 1) {
+        if(arr[1]===0)
+            player1Win();
+        else
+            player2Win(); 
+
+    }
+    else if (arr[2] === arr[5] && arr[5] === arr[8] && arr[2] != 1) {
+        if(arr[2]===0)
+        player1Win();
+        else
+        player2Win(); 
+
+    }
+
+
+    // // cross axis lines check 
+    else if (arr[0] === arr[4] && arr[4] === arr[8] && arr[0] != 1) {
+        if(arr[0]===0)
+        player1Win();
+        else
+        player2Win(); 
+
+    }
+    else if (arr[2] === arr[4] && arr[4] === arr[6] && arr[2] != 1) {
+        if(arr[2]===0)
+            player1Win();
+        else
+            player2Win(); 
+
+    }
+
+    // if match is drawn
+    else if(arr[0]!=1 && arr[1]!=1 && arr[2]!=1 && arr[3]!=1 && arr[4]!=1 && arr[5]!=1 && arr[6]!=1 && arr[7]!=1 && arr[8]!=1){
+            reset();
+        
+    }
+
+}
+
+// -------------------------------------if the player one wins then this function will execute
+function player1Win() {
+    winnerBox.style.display = "Block";
+    document.querySelector(".winner-box h2").innerHTML = "Player 1";
+    document.querySelector(".winner-box img").src = "https://img.icons8.com/ios-glyphs/30/000000/multiply.png";
+}
+// -------------------------------------if the player two wins then this function will execute
+function player2Win() {
+    winnerBox.style.display = "Block";
+    document.querySelector(".winner-box h2").innerHTML = "Player 2";
+    document.querySelector(".winner-box img").src = "https://img.icons8.com/ios-filled/50/000000/circled.png";
+}
+
+//-------------------------- if clicked on GOT IT button then this event listener will execute
+gotIt.addEventListener("click", () => {
+    winnerBox.style.display = "none";
+    reset();
+    
+   
+});
+
+// this fuction reset all the style and value (like reload)
+function reset() {
+
+    setTimeout(()=>{
+        let cell = document.querySelectorAll(".cell");
+        for (let i of cell) {
+            i.classList.remove("cross");
+            i.classList.remove("right");
+        }
+        for (let elem in arr) {
+            arr[elem] = 1;
+        }
+        count = 1;
+
+    },400);
+    
+}
+
+    </script>
+</body>
+
+</html>
